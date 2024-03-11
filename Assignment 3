@@ -1,1 +1,50 @@
-
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+typedef struct PairD
+{
+    double first;
+    double second;
+} Pair;
+/*double lorec(int n)
+{
+    if(n==0)
+        return 0.00;
+    else
+        return(hirec(n-1)+lorec(n-1));
+}
+double hirec(int n)
+{
+    if(n==0)
+        return 1.00;
+    else
+        return(hirec(n-1)*2+lorec(n-1));
+}
+PairL hilorec(int n)
+{
+    PairL ans;
+    ans.first=hirec(n);
+    ans.seconf=lorec(n);
+    return ans;
+}*/
+struct PairD hiloformula(int n)
+{
+    double Hn=((5+pow(5,0.5))/10)*pow(((3-pow(5,0.5))/2),n+1) + ((5-pow(5,0.5))/10)*pow(((3+pow(5,0.5))/2),n+1);
+    double Ln=((-5-3*pow(5,0.5))/10)*pow(((3-pow(5,0.5))/2),n+1) + ((-5+3*pow(5,0.5))/10)*pow(((3+pow(5,0.5))/2),n+1);
+    struct PairD ans;
+    ans.first=Hn;
+    ans.second=Ln;
+    return ans;
+}
+int main()
+{
+    int n;
+    printf("Enter the value of n:- ");
+    scanf("%d",&n);
+    /*printf("Method 0\nHirec:- %lld \n Lorec:- %lld\n",hirec(n),lorec(n));
+    PairL ans=hilorec(n);
+    printf("Method 1\nHirec:- %lld \n Lorec:- %lld\n",ans.first,ans.second);
+    struct PairD ans1=hiloformula(n);*/
+    printf("Method 2\nHirec:- %lf \nLorec:- %lf\n",ans1.first,ans1.second);
+    return 0;
+}
