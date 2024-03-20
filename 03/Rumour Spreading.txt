@@ -1,0 +1,84 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<time.h>
+typedef struct Pair
+{
+    double first;
+    double second;
+} Pair;
+double lorec(int n);
+//double hirec(int n);
+double hirec(int n)
+{
+    if(n==0)
+        return 1;
+    else
+        return hirec(n-1)*2+lorec(n-1);
+}
+double lorec(int n)
+{
+    if(n==0)
+        return 0;
+    else
+        return hirec(n-1)+lorec(n-1);
+}
+Pair hilorec(int n)//O(n)
+{
+    if(n==0)
+    {
+        Pair ans;
+        ans.first=1;
+        ans.second=0;
+        return ans;
+    }
+    Pair temp=hilorec(n-1);
+    Pair ans;
+    ans.first=temp.first*2+temp.second;
+    ans.second=temp.first+temp.second;
+    return ans;
+}
+Pair hiloformula(int n)// ~O(1)
+{
+    Pair ans;
+    ans.first=((5+pow(5,0.5))/10 * pow((3-pow(5,0.5))/2,n+1) + ((5-pow(5,0.5))/10 * pow((3+pow(5,0.5))/2,n+1)));
+    ans.second=((-5+pow(5,0.5)*3)/10 * pow((3-pow(5,0.5))/2,n+1) + ((-5+pow(5,0.5)*3)/10 * pow((3+pow(5,0.5))/2,n+1)));
+    return ans;
+}
+int main()
+{
+    int n;
+    Pair m0,m1,m2;
+    printf("Enter the value of n:- ");
+    scanf("%d",&n);
+    clock_t start,end;
+    double time_used;
+    printf("<-----Method 0----->\n");
+    start=clock();
+    m0.first=hirec(n);
+    m0.second=lorec(n);
+    end=clock();
+    printf("Hirec:- %.2lf\n",m0.first);
+    printf("Lorec:- %.2lf\n",m0.second);
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used:- %.5lf seconds\n",time_used);
+    printf("\n");
+    printf("<-----Method 1----->\n");
+    start=clock();
+    m1=hilorec(n);
+    end=clock();
+    printf("Hirec:- %.2lf\n",m1.first);
+    printf("Lorec:- %.2lf\n",m1.second);
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used:- %.5lf seconds\n",time_used);
+    printf("\n");
+    printf("<-----Method 2----->\n");
+    start=clock();
+    m2=hiloformula(n);
+    end=clock();
+    printf("Hirec:- %.2lf\n",m2.first);
+    printf("Lorec:- %.2lf\n",m2.second);
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time used:- %.5lf seconds\n",time_used);
+    printf("\n");
+}

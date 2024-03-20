@@ -1,0 +1,139 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#include<time.h>
+#include<stdbool.h>
+
+bool method0(int arr[],int n)//O(n^4)
+{
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=i+1;j<=n;++j)
+        {
+            for(int k=j+1;k<=n;++k)
+            {
+                int ind1,ind2,ind3;
+                for(int temp=0;temp<n;++temp)
+                {
+                    if(arr[temp]==i)
+                        ind2=temp;
+                    else if(arr[temp]==j)
+                        ind3=temp;
+                    else if(arr[temp]==k)
+                        ind1=temp;
+                    if(ind1<ind2 && ind2<ind3)
+                        return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+bool method1(int arr[],int n)//O(n^3)
+{
+    for(int i=0;i<n;++i)
+    {
+        int a=arr[i];
+        for(int j=i+1;j<n;++j)
+        {
+            int b=arr[j];
+            for(int k=j+1;k<n;++k)
+            {
+                int c=arr[k];
+                if(b<a && c<a)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool method2(int arr[],int n)
+{
+    for(int i=0;i<n;++i)
+    {
+        int temp=arr[i];
+        //int cnt=0;
+        for(int j=i+1;j<n;++j)
+        {
+            if(arr[i]>arr[j])
+            {
+                if(arr[j]>temp)
+                    return false;
+                temp=arr[j];
+            }
+        }
+    }
+    return true;
+}
+
+/*bool method3(int arr[],int n)
+{
+    for(int i=1;i<n;++i)
+    {
+        if(arr[i]>=arr[i-1])
+            return false;
+    }
+    return true;
+}*/
+
+int main()
+{
+    int n;
+    printf("Enter length of an array:- ");
+    scanf("%d",&n);
+    int arr[n];
+    for(int i=0;i<n;++i)
+    {
+        arr[i]=rand()%23+1;
+        printf("arr[%d]:- %d\n",i,arr[i]);
+        //scanf("%d",&arr[i]);
+    }
+    clock_t start,end;
+    double time_used;
+    printf("<-----Method 0----->\n");
+    start=clock();
+    bool ans=method0(arr,n);
+    end=clock();
+    if(ans)
+        printf("Algolicious.\n");
+    else
+        printf("Unalgolicious.\n");
+    //end=clock();
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time taken:- %.15lf seconds\n",time_used);
+    printf("<-----Method 1----->\n");
+    start=clock();
+    ans=method1(arr,n);
+    end=clock();
+    if(ans)
+        printf("Algolicious.\n");
+    else
+        printf("Unalgolicious.\n");
+    //end=clock();
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time taken:- %.15lf seconds\n",time_used);
+    printf("<-----Method 2----->\n");
+    start=clock();
+    ans=method2(arr,n);
+    end=clock();
+    if(ans)
+        printf("Algolicious.\n");
+    else
+        printf("Unalgolicious.\n");
+    //end=clock();
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time taken:- %.15lf seconds\n",time_used);
+    /*printf("<-----Method 4----->\n");
+    start=clock();
+    ans=method3(arr,n);
+    end=clock();
+    if(ans)
+        printf("Algolicious.\n");
+    else
+        printf("Unalgolicious.\n");
+    //end=clock();
+    time_used=((double)(end-start))/CLOCKS_PER_SEC;
+    printf("Time taken:- %.5lf seconds\n",time_used);*/
+}
