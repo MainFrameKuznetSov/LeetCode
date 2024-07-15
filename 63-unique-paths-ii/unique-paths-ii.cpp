@@ -16,8 +16,6 @@ public:
             prev[0]=1;
         for(int i=0;i<m;++i)
         {
-            vector<int>curr(n,0);
-            curr=prev;
             for(int j=0;j<n;++j)
             {
                 int up=0,left=0;
@@ -26,10 +24,10 @@ public:
                 if(i>0 && grid[i][j]!=1)
                     up=prev[j];
                 if(j>0 && grid[i][j]!=1)
-                    left=curr[j-1];
-                curr[j]=up+left;
+                    left=prev[j-1];
+                prev[j]=up+left;
             }
-            prev=curr;
+            //prev=curr;
         }
         return prev[n-1];
     }
