@@ -2,7 +2,6 @@ class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& grid) {
         int n=grid.size();
-        vector<vector<int>> dp(n,vector<int>(n,-1));
         vector<int>prev(n,-1);
         for(int i=0;i<n;i++)
             prev[i]=grid[0][i];
