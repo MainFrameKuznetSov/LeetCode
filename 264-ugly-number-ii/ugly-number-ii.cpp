@@ -1,26 +1,20 @@
 class Solution {
 public:
     int nthUglyNumber(int n) {
-        int fact[]={2,3,5};
-        priority_queue<long long,vector<long long>,greater<long long>>heap;
-        unordered_set<long long>vis;
-        heap.push(1);
-        vis.insert(1);
-        long long ans;
-        for(int i=0;i<n;++i)
+        vector<int>ans;
+        ans.push_back(1);
+        int m2=0,m3=0,m5=0;
+        for(int i=1;i<n;++i)
         {
-            ans=heap.top();
-            heap.pop();
-            for(int i:fact)
-            {
-                long long temp=ans*i;
-                if(vis.find(temp)==vis.end())
-                {
-                    heap.push(temp);
-                    vis.insert(temp);
-                }
-            }
+            int temp=min(ans[m2]*2,min(ans[m3]*3,ans[m5]*5));
+            ans.push_back(temp);
+            if(temp==ans[m2]*2)
+                ++m2;
+            if(temp==ans[m3]*3)
+                ++m3;
+            if(temp==ans[m5]*5)
+                ++m5;
         }
-        return ans;
+        return ans[n-1];
     }
 };
