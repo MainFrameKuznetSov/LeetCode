@@ -3,7 +3,7 @@ public:
     int nthUglyNumber(int n) {
         int fact[]={2,3,5};
         priority_queue<long long,vector<long long>,greater<long long>>heap;
-        set<long long>vis;
+        unordered_set<long long>vis;
         heap.push(1);
         vis.insert(1);
         long long ans;
