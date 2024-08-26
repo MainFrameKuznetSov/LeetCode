@@ -10,14 +10,6 @@ public:
         }
         for(int i=0;i<n;++i)
         {
-            cout<<i<<"--> {";
-            for(auto iter:adj[i])
-                cout<<iter<<" ";
-            cout<<"}\n";
-        }
-        //cout<<"\n";
-        for(int i=0;i<n;++i)
-        {
             for(auto iter:adj[i])
                 ++indeg[iter];
         }
