@@ -33,7 +33,7 @@ public:
             for(auto iter:curr->children)
             {
                 if(iter)
-                    v.push_back(iter);
+                    v.emplace_back(iter);
             }
         }
         return vector<int>(q.begin(),q.end());
