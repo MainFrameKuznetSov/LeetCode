@@ -20,7 +20,7 @@ public:
             {
                 int nextNode=iter.first;
                 double chance=iter.second;
-                if(chance*pro>prob[nextNode])
+                if((chance*pro)>prob[nextNode])
                 {
                     prob[nextNode]=chance*pro;
                     pq.push({prob[nextNode],nextNode});
