@@ -6,6 +6,7 @@ public:
         psum[0]=chalk[0];
         for(int i=1;i<n;++i)
             psum[i]=psum[i-1]+chalk[i];
+        chalk.clear();
         k=k%psum[n-1];
         for(int i=0;i<n;++i)
         {
