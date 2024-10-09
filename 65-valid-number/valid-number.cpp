@@ -44,7 +44,7 @@ public:
                 else 
                     return false;
             }
-            else if(ch == '.') 
+            else if(ch=='.') 
             {
                 if(dec) 
                     return false;
