@@ -1,14 +1,15 @@
 class Solution {
 public:
     long long minimumSteps(string s) {
-        long long swaps=0,blk_cnt=0;
-        for(int i=0;i<s.size();++i)
+        int n=s.size();
+        long long ans=0,blk_cnt=0;
+        for(int i=0;i<n;++i)
         {
             if(s[i]=='1')
                 ++blk_cnt;
             else
-                swaps+=blk_cnt;
+                ans+=blk_cnt;
         }
-        return swaps;
+        return ans;
     }
 };
