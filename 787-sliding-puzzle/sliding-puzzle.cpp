@@ -1,8 +1,8 @@
 class Solution {
 public:
     int slidingPuzzle(vector<vector<int>>& board) {
-        vector<vector<int>> dir = {{1, 3}, {0, 2, 4}, {1, 5}, {0, 4}, {1, 3, 5}, {2, 4}};
-        string target = "123450";
+        vector<vector<int>>dir={{1,3},{0,2,4},{1,5},{0,4},{1,3,5},{2,4}};
+        string target="123450";
         set<string>st;
         queue<string>q;
         string start="";
