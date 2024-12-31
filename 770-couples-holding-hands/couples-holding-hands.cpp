@@ -72,8 +72,6 @@ class Solution {
 public:
     int minSwapsCouples(vector<int>& row) {
         int n=row.size(),ans=0;
-        if(n==0)
-            return 0;
         DisjointSet DSU(n);
         for(int i=0;i<row.size();i+=2)
         {
