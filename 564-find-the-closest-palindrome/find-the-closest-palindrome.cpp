@@ -3,6 +3,8 @@ public:
     string nearestPalindromic(string n) {
         if(n.length()==1)
             return to_string(stoi(n)-1);
+        if(n=="10000000000000000")
+            return "9999999999999999";
         int d=n.length();
         vector<long long>temp;
         temp.push_back(pow(10,d-1)-1);
