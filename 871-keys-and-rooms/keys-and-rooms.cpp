@@ -14,12 +14,7 @@ public:
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
         int n=rooms.size();
         vector<bool>vis(n,0);
-        vis[0]=1;
-        for(int i=0;i<n;++i)
-        {
-            if(vis[i])
-                dfs(i,vis,rooms);
-        }
+        dfs(0,vis,rooms);
         for(int i=0;i<n;++i)
         {
             if(!vis[i])
