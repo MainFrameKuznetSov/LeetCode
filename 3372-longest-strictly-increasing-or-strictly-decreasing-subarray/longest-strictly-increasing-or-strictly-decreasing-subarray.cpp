@@ -1,44 +1,29 @@
 class Solution {
 public:
     int longestMonotonicSubarray(vector<int>& nums) {
-        int n=nums.size(),ans=0;
-            for(int j=0;j<n;++j)//O(n)
+        int n=nums.size(),inc=1,dec=1,ans=1;
+        for(int ind=0;ind<n-1;++ind)
+        {
+            if(nums[ind]>nums[ind+1])
             {
-                int val=nums[j],len=1;
-                ans=max(ans,len);
-                bool dec=0,inc=0;
-                for(int k=j+1;k<n;++k)//O(n)
-                {
-                    if(k==j+1)
-                    {
-                        if(nums[k]<nums[j])
-                        {
-                            dec=1;
-                            ++len;
-                        }
-                        else if(nums[k]>nums[j])
-                        {
-                            inc=1;
-                            ++len;
-                        }
-                        else
-                            break;
-                    }
-                    else
-                    {
-                        if(inc && nums[k]>nums[k-1])
-                            ++len;
-                        else if(dec && nums[k]<nums[k-1])
-                            ++len;
-                        else 
-                            break;
-                    }
-                }
-                ans=max(ans,len);
+                ++dec;
+                inc=1;
             }
+            else if(nums[ind]<nums[ind+1])
+            {
+                ++inc;
+                dec=1;
+            }
+            else
+            {
+                inc=1;
+                dec=1;
+            }
+            ans=max(ans,max(dec,inc));
+        }
         return ans;
         /*
-            Overall Time complexity:- O(n*n)
+            Overall Time complexity:- O(n)
             Overall Space complexity:- O(1)
         */
     }
