@@ -4,17 +4,17 @@ public:
         map<int,set<int>>mp;
         map<int,int>mp2;
         vector<int>ans;
-        for (auto iter:queries)
+        for(auto it:queries)
         {
-            if(mp2.find(iter[0])!=mp2.end())
+            if(mp2.find(it[0])!=mp2.end())
             {
-                int prev=mp2[iter[0]];
-                mp[prev].erase(iter[0]);
+                int prev=mp2[it[0]];
+                mp[prev].erase(it[0]);
                 if(mp[prev].empty())
                     mp.erase(prev);
             }
-            mp[iter[1]].insert(iter[0]);
-            mp2[iter[0]]=iter[1];
+            mp2[it[0]]=it[1];
+            mp[it[1]].insert(it[0]);
             ans.push_back(mp.size());
         }  
         return ans;
