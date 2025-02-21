@@ -12,6 +12,7 @@
 class FindElements {
 public:
     TreeNode* R;
+    unordered_set<int>st;
     void recur(TreeNode* &root)
     {
         if(!root)
@@ -20,39 +21,24 @@ public:
         if(curr->left)
         {
             curr->left->val=(curr->val)*2+1;
+            st.insert(curr->left->val);
             recur(curr->left);
         }
         if(curr->right)
         {
             curr->right->val=(curr->val)*2+2;
+            st.insert(curr->right->val);
             recur(curr->right);
         }
     }
     FindElements(TreeNode* root) {
         root->val=0;
+        st.insert(0);
         recur(root);
-        R=root;
     }
     
     bool find(int target) {
-        queue<TreeNode*>q;
-        q.push(R);
-        while(!q.empty())
-        {
-            int n=q.size();
-            for(int i=0;i<n;++i)
-            {
-                auto node=q.front();
-                q.pop();
-                if(node->val==target)
-                    return 1;
-                if(node->left)
-                    q.push(node->left);
-                if(node->right)
-                    q.push(node->right);
-            }
-        }
-        return 0;
+        return (st.count(target)>0?1:0);
     }
 };
 
