@@ -11,29 +11,27 @@
  */
 class FindElements {
 public:
-    TreeNode* R;
     unordered_set<int>st;
     void recur(TreeNode* &root)
     {
         if(!root)
             return ;
         TreeNode* curr=root;
+        st.insert(curr->val);
         if(curr->left)
         {
             curr->left->val=(curr->val)*2+1;
-            st.insert(curr->left->val);
             recur(curr->left);
         }
         if(curr->right)
         {
             curr->right->val=(curr->val)*2+2;
-            st.insert(curr->right->val);
             recur(curr->right);
         }
     }
     FindElements(TreeNode* root) {
         root->val=0;
-        st.insert(0);
+        //st.insert(0);
         recur(root);
     }
     
