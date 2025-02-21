@@ -36,7 +36,7 @@ public:
     }
     
     bool find(int target) {
-        return (st.count(target)>0?1:0);
+        return st.count(target);
     }
 };
 
