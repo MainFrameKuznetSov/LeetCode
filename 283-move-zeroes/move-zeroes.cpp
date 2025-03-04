@@ -2,8 +2,6 @@ class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
         int n=nums.size(),temp=-1;
-        if(n==1)
-            return ;
         for(int i=0;i<n;++i)
         {
             if(nums[i]==0)
