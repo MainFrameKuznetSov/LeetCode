@@ -26,9 +26,6 @@ public:
                 }
             }
         }
-        vector<int>ans;
-        ans.push_back(repeat);
-        ans.push_back(miss);
-        return ans;
+        return {repeat,miss};
     }
 };
