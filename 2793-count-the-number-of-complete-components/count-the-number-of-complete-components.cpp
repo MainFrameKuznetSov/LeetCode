@@ -15,10 +15,6 @@ public:
     }
 
     int countCompleteComponents(int n, vector<vector<int>>& edges) {
-        if(n==1)
-            return 1;
-        if(edges.size()==0)
-            return n;
         vector<vector<int>>adj(n);
         for(auto it:edges)
         {
