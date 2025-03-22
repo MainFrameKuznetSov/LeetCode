@@ -47,11 +47,6 @@ public:
                     ++edge;
             }
             //cout<<edge<<"\n";
-            if(edge==0 && vert==1)
-            {
-                ++ans;
-                continue;
-            }
             if(edge==(vert*(vert-1)))
                 ++ans;
         }
