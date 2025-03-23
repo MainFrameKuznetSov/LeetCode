@@ -1,82 +1,69 @@
-class DisjointSetUnion {
-public:
-    vector<int>rank,size,prnt;
-    DisjointSetUnion(int n) 
-    {
-        rank.resize(n+1,0);
-        size.resize(n+1,1);
-        prnt.resize(n+1);
-        for(int i=0;i<=n;++i)
-            prnt[i]=i;
-    }
-
-    int findUPar(int u)
-    {
-        if(u==prnt[u])
-            return u;
-        return prnt[u]=findUPar(prnt[u]);
-    }
-
-    bool find(int u, int v) 
-    {
-        return findUPar(u)==findUPar(v);
-    }
-
-    void unionByRank(int u, int v) 
-    {
-        int ulp_u=findUPar(u);
-        int ulp_v=findUPar(v);
-        if(ulp_u==ulp_v)
-            return ;
-        if(rank[ulp_u]<rank[ulp_v])
-            prnt[ulp_u]=ulp_v;
-        else if(rank[ulp_u]>rank[ulp_v])
-            prnt[ulp_v]=ulp_u;
-        else
+class DisjointSet
+{
+    public:
+        vector<int>prnt,size;
+        int components;
+        DisjointSet(int n)
         {
-            prnt[ulp_v]=ulp_u;
-            ++rank[ulp_u];
+            components=n;
+            prnt.resize(n,0);
+            size.resize(n,1);
+            for(int i=0;i<n;++i)
+                prnt[i]=i;
         }
-    }
 
-    void unionBySize(int u, int v) 
-    {
-       int ulp_u=findUPar(u);
-            int ulp_v=findUPar(v);
-            if(ulp_u==ulp_v)    
+        int findUPar(int u)
+        {
+            if(prnt[u]==u)
+                return u;
+            return prnt[u]=findUPar(prnt[u]);
+        }
+
+        void unionBySize(int u,int v)
+        {
+            int ulp_u=findUPar(u),ulp_v=findUPar(v);
+            if(ulp_u==ulp_v)
                 return ;
-            if(size[ulp_u]<size[ulp_v])
+            if(size[ulp_u]>size[ulp_v])
             {
-                prnt[ulp_u]=ulp_v;
-                size[ulp_v]+=size[ulp_u];
+                size[ulp_u]+=size[ulp_v];
+                prnt[ulp_v]=ulp_u;
+                --components;
             }
             else
             {
-                prnt[ulp_v]=ulp_u;
-                size[ulp_u]+=size[ulp_v];
+                size[ulp_v]+=size[ulp_u];
+                prnt[ulp_u]=ulp_v;
+                --components;
             }
-    }
+        }
 };
 
 class Solution {
 public:
     int makeConnected(int n, vector<vector<int>>& connections) {
-        DisjointSetUnion dsu(n);
-        int extra=0,comp=0;
+        DisjointSet dsu(n);
+        int extra=0,pre=n;
         for(auto it:connections)
         {
-            if(dsu.findUPar(it[0])==dsu.findUPar(it[1]))
+            int u=it[0],v=it[1];
+            //if(dsu.prnt[u]!=dsu.prnt[v])
+            dsu.unionBySize(u,v);
+            // else
+            // {
+            //     //cout<<u<<"-->"<<v<<"\n";
+            //     dsu.unionBySize(u,v);
+            //     ++extra;
+            // }
+            //cout<<u<<"-->"<<v<<" "<<dsu.components<<"\n";
+            if(dsu.components==pre)
                 ++extra;
-            else    
-                dsu.unionBySize(it[0],it[1]);
+            pre=dsu.components;
         }
-        for(int i=0;i<n;++i)
-        {
-            if(dsu.prnt[i]==i)
-                ++comp;
-        }
-        if(extra>=(comp-1))
-            return comp-1;
-        return -1;
+        int ans=dsu.components;
+        //cout<<ans<<" "<<extra<<"\n";
+        if(extra+1<ans)
+            return -1;
+        return ans-1;
     }
 };
