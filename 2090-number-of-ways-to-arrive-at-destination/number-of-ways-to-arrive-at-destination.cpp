@@ -14,7 +14,7 @@ public:
         dist[0]=0LL;
         set<pair<long long,int>>st;
         st.insert({0LL,0});
-        while(!st.empty())
+        while(!st.empty())//(N+2e)log(N+2e) + (N+2e)
         {
             auto curr=*st.begin();
             st.erase(curr);
