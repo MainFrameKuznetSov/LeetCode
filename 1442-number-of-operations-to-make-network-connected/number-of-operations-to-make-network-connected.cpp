@@ -19,11 +19,11 @@ class DisjointSet
             return prnt[u]=findUPar(prnt[u]);
         }
 
-        void unionBySize(int u,int v)
+        int unionBySize(int u,int v)
         {
             int ulp_u=findUPar(u),ulp_v=findUPar(v);
             if(ulp_u==ulp_v)
-                return ;
+                return 1;
             if(size[ulp_u]>size[ulp_v])
             {
                 size[ulp_u]+=size[ulp_v];
@@ -36,6 +36,7 @@ class DisjointSet
                 prnt[ulp_u]=ulp_v;
                 --components;
             }
+            return 0;
         }
 };
 
@@ -48,7 +49,7 @@ public:
         {
             int u=it[0],v=it[1];
             //if(dsu.prnt[u]!=dsu.prnt[v])
-            dsu.unionBySize(u,v);
+            extra+=dsu.unionBySize(u,v);
             // else
             // {
             //     //cout<<u<<"-->"<<v<<"\n";
@@ -56,9 +57,6 @@ public:
             //     ++extra;
             // }
             //cout<<u<<"-->"<<v<<" "<<dsu.components<<"\n";
-            if(dsu.components==pre)
-                ++extra;
-            pre=dsu.components;
         }
         int ans=dsu.components;
         //cout<<ans<<" "<<extra<<"\n";
