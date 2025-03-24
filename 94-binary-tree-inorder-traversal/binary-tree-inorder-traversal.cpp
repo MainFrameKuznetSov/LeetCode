@@ -10,13 +10,14 @@
  * };
  */
 class Solution {
-public:
 
+private:
     vector<int>ans;
+public:
 
     void recur(TreeNode* root)
     {
-        if(root==NULL)
+        if(!root)
             return ;
         recur(root->left);
         ans.push_back(root->val);
@@ -24,7 +25,8 @@ public:
     }
 
     vector<int> inorderTraversal(TreeNode* root) {
-        ans={};
+        if(!root)
+            return {};
         recur(root);
         return ans;
     }
