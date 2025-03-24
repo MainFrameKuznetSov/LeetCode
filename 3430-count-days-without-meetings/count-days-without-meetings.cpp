@@ -12,7 +12,7 @@ public:
             if(curL>maxR)
                 ans+=(curL-maxR-1);
             //cout<<ans<<"\n";       
-            maxR=max(maxR,max(curR,preR));     
+            maxR=max(maxR,curR);     
         }
         //if(days!=meetings[n-1][1])
         ans+=max(days-maxR,0);
