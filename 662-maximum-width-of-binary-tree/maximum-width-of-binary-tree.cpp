@@ -15,26 +15,28 @@ public:
         if(!root)
             return 0;
         queue<pair<TreeNode*,long long>>q;
-        q.push({root,0});
+        q.push({root,0LL});
         long long ans=0;
         while(!q.empty())
         {
-            long long n=q.size(),top=q.front().second,first=-1,last=-1;
+            int n=q.size();
+            long long top=q.front().second,L=-1,R=-1;
             for(int i=0;i<n;++i)
             {
-                auto node=q.front().first;
+                auto curr=q.front().first;
                 long long ind=q.front().second-top;
                 q.pop();
-                if(node->left)
-                    q.push({node->left,ind*2+1});
-                if(node->right)
-                    q.push({node->right,ind*2+2});
+                if(curr->left)
+                    q.push({curr->left,ind*2+1});
+                if(curr->right)
+                    q.push({curr->right,ind*2+2});
                 if(i==0)
-                    first=ind;
+                    L=ind;
                 if(i==n-1)
-                    last=ind;
+                    R=ind;
+                cout<<L<<" "<<R<<"\n";
             }
-            ans=max(ans,last-first+1);
+            ans=max(ans,R-L+1);
         }
         return ans;
     }
