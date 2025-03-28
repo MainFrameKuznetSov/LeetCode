@@ -30,10 +30,7 @@ public:
                     st.insert({dist[nextNode],nextNode});
                 }
                 else if(dis+wt==dist[nextNode])
-                {
                     ways[nextNode]=(ways[nextNode]+ways[node])%MOD;
-                    st.insert({dist[nextNode],nextNode});
-                }
             }
         }
         return ways[n-1]%MOD;
