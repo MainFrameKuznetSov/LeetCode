@@ -1,42 +1,54 @@
 class Solution {
 public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>>dist(n,vector<int>(n,INT_MAX));
+        vector<vector<int>>mat(n,vector<int>(n,INT_MAX));
         for(auto it:edges)
         {
-            dist[it[1]][it[0]]=it[2];
-            dist[it[0]][it[1]]=it[2];
+            mat[it[0]][it[1]]=it[2];
+            mat[it[1]][it[0]]=it[2];
         }
+        
+        // for(int i=0;i<n;++i)
+        // {
+        //     for(int j=0;j<n;++j)
+        //         cout<<mat[i][j]<<" ";
+        //     cout<<"\n\n";
+        // }
+
         for(int i=0;i<n;++i)
         {
-            dist[i][i]=0;
+            mat[i][i]=0;
             for(int j=0;j<n;++j)
             {
                 for(int k=0;k<n;++k)
                 {
-                    if(dist[j][i]!=INT_MAX && dist[i][k]!=INT_MAX) 
-                        dist[j][k]=min(dist[j][k],dist[j][i]+dist[i][k]);
+                    if(mat[j][i]!=INT_MAX && mat[i][k]!=INT_MAX)
+                        mat[j][k]=min(mat[j][k],mat[j][i]+mat[i][k]);
                 }
             }
         }
-
-        int ans=-1,maxEdge=INT_MAX;
-
+        // for(int i=0;i<n;++i)
+        // {
+        //     for(int j=0;j<n;++j)
+        //         cout<<mat[i][j]<<" ";
+        //     cout<<"\n";
+        // }
+        int ans=-1,mncnt=INT_MAX;
         for(int i=0;i<n;++i)
         {
             int cnt=0;
             for(int j=0;j<n;++j)
             {
-                if(i!=j && dist[i][j]<=distanceThreshold)
+                if(i!=j && mat[i][j]<=distanceThreshold)
                     ++cnt;
             }
-            if(cnt<=maxEdge)
+            //cout<<i<<" "<<cnt<<"\n";
+            if(cnt<=mncnt)
             {
-                maxEdge=cnt;
+                mncnt=cnt;
                 ans=i;
             }
         }
-
         return ans;
     }
 };
