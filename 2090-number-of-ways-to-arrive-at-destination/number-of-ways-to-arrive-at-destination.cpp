@@ -10,31 +10,29 @@ public:
         }
         vector<long long>dist(n,LLONG_MAX);
         vector<int>ways(n,0);
+        dist[0]=0;
         ways[0]=1;
-        dist[0]=0LL;
         set<pair<long long,int>>st;
-        st.insert({0LL,0});
-        while(!st.empty())//(N+2e)log(N+2e) + (N+2e)
+        st.insert({0,0});
+        while(!st.empty())
         {
-            auto curr=*st.begin();
-            st.erase(curr);
-            long long dis=curr.first;
-            int node=curr.second;
+            auto top=*st.begin();
+            st.erase(top);
+            long long dis=top.first;
+            int node=top.second;
             for(auto it:adj[node])
             {
-                //ways[it]=(ways[it]+ways[node])%MOD;
                 int nextNode=it.first,wt=it.second;
                 if(dis+wt<dist[nextNode])
                 {
-                    ways[nextNode]=ways[node];//Since this is the first time we reach the most optimum path, we have to re-initialise the ways to reach nextNode
-                    dist[nextNode]=(long long)(dis+wt);
+                    dist[nextNode]=dis+wt;
+                    ways[nextNode]=ways[node]%MOD;
                     st.insert({dist[nextNode],nextNode});
                 }
                 else if(dis+wt==dist[nextNode])
                 {
-                    //cout<<node<<"---"<<dist[nextNode]<<"-->"<<nextNode<<"\n";
                     ways[nextNode]=(ways[nextNode]+ways[node])%MOD;
-                    //st.insert({dist[nextNode],nextNode});
+                    st.insert({dist[nextNode],nextNode});
                 }
             }
         }
