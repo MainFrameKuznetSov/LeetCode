@@ -4,28 +4,25 @@ public:
         vector<pair<int,int>>adj[n];
         for(auto it:flights)
             adj[it[0]].push_back({it[1],it[2]});
+        vector<int>dist(n,INT_MAX);
+        dist[src]=0;
         set<pair<int,pair<int,int>>>st;
         st.insert({0,{0,src}});
-        vector<int>dist(n,1e9);
-        dist[src]=0;
         while(!st.empty())
         {
-            auto curr=*st.begin();
-            st.erase(curr);
-            int stops=curr.first;
-            int node=curr.second.second,cost=curr.second.first;
+            auto top=*st.begin();
+            st.erase(top);
+            int stops=top.first,price=top.second.first,node=top.second.second;
             for(auto it:adj[node])
             {
-                int nextNode=it.first,price=it.second;
-                if(cost+price<dist[nextNode] && stops<=k)
+                int nextNode=it.first,cost=it.second;
+                if(price+cost<dist[nextNode] && stops<=k)
                 {
-                    dist[nextNode]=cost+price;
+                    dist[nextNode]=price+cost;
                     st.insert({stops+1,{dist[nextNode],nextNode}});
                 }
             }
         }
-        if(dist[dst]==1e9)
-            return -1;
-        return dist[dst];
+        return dist[dst]==INT_MAX?-1:dist[dst];
     }
 };
