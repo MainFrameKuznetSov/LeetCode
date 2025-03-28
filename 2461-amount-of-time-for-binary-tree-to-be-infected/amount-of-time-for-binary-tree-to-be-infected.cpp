@@ -10,78 +10,71 @@
  * };
  */
 class Solution {
-
-private:
-    unordered_map<TreeNode*,TreeNode*>prnt;
-
 public:
+
+    unordered_map<TreeNode*,TreeNode*>prnt;
 
     TreeNode* getParents(TreeNode* root,int start)
     {
+        TreeNode* src=NULL;
         queue<TreeNode*>q;
-        TreeNode* ans=NULL;
         q.push(root);
         while(!q.empty())
         {
             int n=q.size();
             for(int i=0;i<n;++i)
             {
-                auto node=q.front();
+                auto curr=q.front();
                 q.pop();
-                if(node->val==start)
-                    ans=node;
-                if(node->left)
+                if(curr->val==start)
+                    src=curr;
+                if(curr->left)
                 {
-                    q.push(node->left);
-                    prnt[node->left]=node;
+                    q.push(curr->left);
+                    prnt[curr->left]=curr;
                 }
-                if(node->right)
+                if(curr->right)
                 {
-                    q.push(node->right);
-                    prnt[node->right]=node;
+                    q.push(curr->right);
+                    prnt[curr->right]=curr;
                 }
             }
         }
-        return ans;
+        return src;
     }
 
-    int affect(TreeNode* src)
+    int affect(TreeNode* root,TreeNode* src)
     {
-        unordered_map<TreeNode*,bool>vis;
-        vis[src]=1;
+        int ans=-1;
         queue<TreeNode*>q;
+        unordered_map<TreeNode*,bool>vis;
         q.push(src);
         vis[src]=1;
-        int ans=0;
         while(!q.empty())
         {
             int n=q.size();
-            bool f=0;
             for(int i=0;i<n;++i)
             {
-                auto node=q.front();
+                //++ans;
+                auto curr=q.front();
                 q.pop();
-                if(node->left && !vis[node->left])
+                if(curr->left && !vis.count(curr->left))
                 {
-                    q.push(node->left);
-                    vis[node->left]=1;
-                    f=1;
+                    q.push(curr->left);
+                    vis[curr->left]=1;
                 }
-                if(node->right && !vis[node->right])
+                if(curr->right && !vis[curr->right])
                 {
-                    q.push(node->right);
-                    vis[node->right]=1;
-                    f=1;
+                    q.push(curr->right);
+                    vis[curr->right]=1;
                 }
-                if(prnt.count(node) && !vis[prnt[node]])
+                if(prnt.count(curr) && !vis[prnt[curr]])
                 {
-                    q.push(prnt[node]);
-                    vis[prnt[node]]=1;
-                    f=1;
+                    q.push(prnt[curr]);
+                    vis[prnt[curr]]=1;
                 }
             }
-            if(f)
-                ++ans;
+            ++ans;
         }
         return ans;
     }
@@ -90,6 +83,6 @@ public:
         if(!root)
             return 0;
         TreeNode* src=getParents(root,start);
-        return affect(src);
+        return affect(root,src);
     }
 };
