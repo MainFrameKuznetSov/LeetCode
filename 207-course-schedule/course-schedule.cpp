@@ -1,13 +1,14 @@
 class Solution {
 public:
     bool canFinish(int n,vector<vector<int>>&pre) {
-        vector<int>adj[n],indeg(n,0),topo;
-        for(int i=0;i<pre.size();++i)
-            adj[pre[i][1]].emplace_back(pre[i][0]);
+        vector<int>adj[n];
+        for(auto it:pre)
+            adj[it[1]].push_back(it[0]);
+        vector<int>topo,indeg(n,0);
         for(int i=0;i<n;++i)
         {
-            for(auto iter:adj[i])
-                ++indeg[iter];
+            for(auto it:adj[i])
+                ++indeg[it];
         }
         queue<int>q;
         for(int i=0;i<n;++i)
@@ -18,15 +19,15 @@ public:
         while(!q.empty())
         {
             int node=q.front();
-            topo.emplace_back(node);
             q.pop();
-            for(auto iter:adj[node])
+            topo.push_back(node);
+            for(auto it:adj[node])
             {
-                --indeg[iter];
-                if(indeg[iter]==0)
-                    q.push(iter);
+                --indeg[it];
+                if(indeg[it]==0)
+                    q.push(it);
             }
         }
-        return (topo.size()==n);
+        return topo.size()==n;
     }
 };
