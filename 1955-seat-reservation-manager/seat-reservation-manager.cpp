@@ -1,6 +1,6 @@
 class SeatManager {
 public:
-    set<int>res,unres;
+    set<int>unres;
     SeatManager(int n) {
         for(int i=1;i<=n;++i)
             unres.insert(i);
@@ -9,13 +9,11 @@ public:
     int reserve() {
         int seat=*unres.begin();
         unres.erase(seat);
-        res.insert(seat);
         return seat;
     }
     
     void unreserve(int seatNumber) {
         unres.insert(seatNumber);
-        res.erase(seatNumber);
     }
 };
 
