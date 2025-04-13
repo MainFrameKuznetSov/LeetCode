@@ -5,9 +5,9 @@ public:
 
     TopVotedCandidate(vector<int>& persons, vector<int>& times) {
         time=times;
-        int n=persons.size();
+        int n=persons.size(),temp=-1,mx=0;
         unordered_map<int,int>mp;
-        int temp=-1,mx=0;
+        // int temp=-1,mx=0;
         for(int i=0;i<n;++i)
         {
             ++mp[persons[i]];
