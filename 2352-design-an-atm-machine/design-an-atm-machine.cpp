@@ -31,14 +31,11 @@ public:
         for(int i=4;i>=0;--i)
         {
             //cout<<val[i]<<"\n";
-            if(amount>=val[i])
-            {
                 int cnt=(amount/val[i]);
                 cnt=min(cnt,curr[i]);
                 amount-=(cnt*val[i]);
                 curr[i]-=cnt;
                 ans[i]+=cnt;
-            }
         }
         if(amount)
         {
