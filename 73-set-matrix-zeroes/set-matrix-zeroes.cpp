@@ -8,7 +8,7 @@ public:
             for(int j=0;j<m;++j)
             {
                 if(mat[i][j]==0)
-                    cell.push_back(make_pair(i,j));
+                    cell.push_back({i,j});
             }
         }
         for(int i=0;i<cell.size();++i)
