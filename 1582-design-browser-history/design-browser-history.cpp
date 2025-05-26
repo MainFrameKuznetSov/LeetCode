@@ -22,7 +22,7 @@ public:
             bwd.pop();
             fwd.push(node);
         }
-        return bwd.empty()?home:bwd.top();
+        return bwd.top();
     }
     
     string forward(int steps) {
@@ -32,7 +32,7 @@ public:
             fwd.pop();
             bwd.push(node);
         }
-        return bwd.empty()?home:bwd.top();
+        return bwd.top();
     }
 };
 
