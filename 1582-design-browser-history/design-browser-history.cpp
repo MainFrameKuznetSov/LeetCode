@@ -16,23 +16,21 @@ public:
     }
     
     string back(int steps) {
-        while(steps && bwd.size()>1)
+        while(steps-- && bwd.size()>1)
         {
             string node=bwd.top();
             bwd.pop();
             fwd.push(node);
-            --steps;
         }
         return bwd.empty()?home:bwd.top();
     }
     
     string forward(int steps) {
-        while(steps && !fwd.empty())
+        while(steps-- && !fwd.empty())
         {
             string node=fwd.top();
             fwd.pop();
             bwd.push(node);
-            --steps;
         }
         return bwd.empty()?home:bwd.top();
     }
