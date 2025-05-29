@@ -1,22 +1,52 @@
 class MyHashMap {
 public:
 
-    vector<int>Map;
+    int size;
+    vector<list<pair<int,int>>>Map;
 
     MyHashMap() {
-        Map=vector<int>(1e6+1,-1);
+        size=1e4;
+        Map.resize(size);
     }
     
     void put(int key, int value) {
-        Map[key]=value;
+        int hash=key%size;
+        auto &chain=Map[hash];
+        for(auto &it:chain)
+        {
+            if(it.first==key)
+            {
+                it.second=value;
+                return ;
+            }
+        }
+        chain.emplace_back(key,value);
     }
     
     int get(int key) {
-        return Map[key];
+        int hash=key%size;
+        auto &chain=Map[hash];
+        if(chain.empty())
+            return -1;
+        for(auto it:chain)
+        {
+            if(it.first==key)
+                return it.second;
+        }
+        return -1;
     }
     
     void remove(int key) {
-        Map[key]=-1;
+        int hash=key%size;
+        auto &chain=Map[hash];
+        for(auto it=chain.begin();it!=chain.end();++it)
+        {
+            if(it->first==key)
+            {
+                chain.erase(it);
+                return ;
+            }
+        }
     }
 };
 
