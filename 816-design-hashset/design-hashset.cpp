@@ -1,20 +1,24 @@
 class MyHashSet {
 public:
-    unordered_map<int,bool>set;
+
+    int size;
+    vector<bool>Set;
+
     MyHashSet() {
-        
+        size=1e6+1;
+        Set.resize(size);
     }
     
     void add(int key) {
-        set[key]=1;
+        Set[key]=1;
     }
     
     void remove(int key) {
-        set.erase(key);
+        Set[key]=0;
     }
     
     bool contains(int key) {
-        return set.count(key);
+        return Set[key];
     }
 };
 
