@@ -1,37 +1,34 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int n=grid.size(),m=grid[0].size();
-        int vis[n][m];
+        int n=grid.size(),m=grid[0].size(),ans=0;
         queue<pair<pair<int,int>,int>>q;
+        vector<vector<bool>>vis(n,vector<bool>(m,0));
         for(int i=0;i<n;++i)
         {
             for(int j=0;j<m;++j)
             {
                 if(grid[i][j]==2)
                 {
-                    vis[i][j]=1;
                     q.push({{i,j},0});
+                    vis[i][j]=1;
                 }
-                else
-                    vis[i][j]=0;
             }
         }
-        int ans=0;
+        vector<pair<int,int>>dir={{-1,0},{0,1},{1,0},{0,-1}};
         while(!q.empty())
         {
-            int r=q.front().first.first,c=q.front().first.second,t=q.front().second;
+            int i=q.front().first.first,j=q.front().first.second,time=q.front().second;
             q.pop();
-            int dr[]={-1,0,1,0};
-            int dc[]={0,1,0,-1};
-            for(int i=0;i<4;++i)
+            ans=time;
+            for(int k=0;k<4;++k)
             {
-                int nr=r+dr[i],nc=c+dc[i];
-                if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc] && grid[nr][nc]==1)
+                int ni=i+dir[k].first,nj=j+dir[k].second;
+                if(ni>=0 && ni<n && nj>=0 && nj<m && grid[ni][nj]==1 && !vis[ni][nj])
                 {
-                    q.push({{nr,nc},t+1});
-                    ans=max(ans,t+1);
-                    grid[nr][nc]=2;
+                    vis[ni][nj]=1;
+                    grid[ni][nj]=2;
+                    q.push({{ni,nj},time+1});
                 }
             }
         }
@@ -39,7 +36,7 @@ public:
         {
             for(int j=0;j<m;++j)
             {
-                if(!vis[i][j] && grid[i][j]==1)
+                if(grid[i][j]==1)
                     return -1;
             }
         }
