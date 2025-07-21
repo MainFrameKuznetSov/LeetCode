@@ -10,9 +10,7 @@ public:
         {
             char c=s[i];
             if(s[i-1]==c && s[i-2]==c)
-            {
-
-            }
+                continue;
             else
                 ans+=c;
         }
