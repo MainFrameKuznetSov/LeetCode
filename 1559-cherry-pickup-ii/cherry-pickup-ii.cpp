@@ -27,21 +27,22 @@ public:
 
     int cherryPickup(vector<vector<int>>& grid) {
         int n=grid.size(),m=grid[0].size();
-        vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m,0)));
+        vector<vector<int>>prev(m,vector<int>(m,0));
         //return f(0,0,m-1,grid,dp,n,m);
         for(int y1=0;y1<m;++y1)
         {
             for(int y2=0;y2<m;++y2)
             {
                 if(y1==y2)
-                    dp[n-1][y1][y2]=grid[n-1][y1];
+                    prev[y1][y2]=grid[n-1][y1];
                 else
-                    dp[n-1][y1][y2]=grid[n-1][y1]+grid[n-1][y2];
+                    prev[y1][y2]=grid[n-1][y1]+grid[n-1][y2];
             }
         }
 
         for(int x=n-2;x>=0;--x)
         {
+            vector<vector<int>>curr(m,vector<int>(m,0));
             for(int y1=0;y1<m;++y1)
             {
                 for(int y2=0;y2<m;++y2)
@@ -54,16 +55,17 @@ public:
                             if(y1+i>=0 && y1+i<m && y2+j>=0 && y2+j<m)
                             {
                                 if(y1==y2)
-                                    mx=max(mx,grid[x][y1]+dp[x+1][y1+i][y2+j]);
+                                    mx=max(mx,grid[x][y1]+prev[y1+i][y2+j]);
                                 else
-                                    mx=max(mx,grid[x][y1]+grid[x][y2]+dp[x+1][y1+i][y2+j]);
+                                    mx=max(mx,grid[x][y1]+grid[x][y2]+prev[y1+i][y2+j]);
                             }
                         }
                     }
-                    dp[x][y1][y2]=mx;
+                    curr[y1][y2]=mx;
                 }
             }
+            prev=curr;
         }
-        return dp[0][0][m-1];
+        return prev[0][m-1];
     }
 };
