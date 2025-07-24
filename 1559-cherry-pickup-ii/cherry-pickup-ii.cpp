@@ -3,41 +3,67 @@
 class Solution {
 public:
 
-    int f(int x,int y1,int y2,vector<vector<int>>&mat,vector<vector<vector<int>>>&dp,int n,int m)
-    {
-        if(y1<0 || y2<0 ||  y1>=m || y2>=m)
-            return MIN;
+    // int f(int x,int y1,int y2,vector<vector<int>>&mat,vector<vector<vector<int>>>&dp,int n,int m)
+    // {
+    //     if(y1<0 || y2<0 ||  y1>=m || y2>=m)
+    //         return MIN;
 
-        if(dp[x][y1][y2]!=-1)
-            return dp[x][y1][y2];
+    //     if(dp[x][y1][y2]!=-1)
+    //         return dp[x][y1][y2];
 
-        if(x==n-1)
-        {
-            if(y1==y2)
-                return mat[x][y1];
-            else
-                return mat[x][y1]+mat[x][y2];
-        }
+    //     if(x==n-1)
+    //     {
+    //         if(y1==y2)
+    //             return mat[x][y1];
+    //         else
+    //             return mat[x][y1]+mat[x][y2];
+    //     }
 
-        int mx=MIN;
-        for(int i=-1;i<=1;++i)
-        {
-            for(int j=-1;j<=1;++j)
-            {
-                if(y1==y2)
-                    mx=max(mx,mat[x][y1]+f(x+1,y1+i,y2+j,mat,dp,n,m));
-                else
-                    mx=max(mx,mat[x][y1]+mat[x][y2]+f(x+1,y1+i,y2+j,mat,dp,n,m));
-            }
-        }
-
-        return dp[x][y1][y2]=mx;
         
-    }
+
+    //     return dp[x][y1][y2]=mx;
+        
+    // }
 
     int cherryPickup(vector<vector<int>>& grid) {
         int n=grid.size(),m=grid[0].size();
-        vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m,-1)));
-        return f(0,0,m-1,grid,dp,n,m);
+        vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m,0)));
+        //return f(0,0,m-1,grid,dp,n,m);
+        for(int y1=0;y1<m;++y1)
+        {
+            for(int y2=0;y2<m;++y2)
+            {
+                if(y1==y2)
+                    dp[n-1][y1][y2]=grid[n-1][y1];
+                else
+                    dp[n-1][y1][y2]=grid[n-1][y1]+grid[n-1][y2];
+            }
+        }
+
+        for(int x=n-2;x>=0;--x)
+        {
+            for(int y1=0;y1<m;++y1)
+            {
+                for(int y2=0;y2<m;++y2)
+                {
+                    int mx=MIN;
+                    for(int i=-1;i<=1;++i)
+                    {
+                        for(int j=-1;j<=1;++j)
+                        {
+                            if(y1+i>=0 && y1+i<m && y2+j>=0 && y2+j<m)
+                            {
+                                if(y1==y2)
+                                    mx=max(mx,grid[x][y1]+dp[x+1][y1+i][y2+j]);
+                                else
+                                    mx=max(mx,grid[x][y1]+grid[x][y2]+dp[x+1][y1+i][y2+j]);
+                            }
+                        }
+                    }
+                    dp[x][y1][y2]=mx;
+                }
+            }
+        }
+        return dp[0][0][m-1];
     }
 };
