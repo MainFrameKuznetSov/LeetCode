@@ -30,7 +30,29 @@ public:
 
     int maxProfit(vector<int>& prices) {
         int n=prices.size();
-        vector<vector<int>>dp(n,vector<int>(2,-1));
-        return f(0,1,prices,dp);
+        vector<vector<int>>dp(n+2,vector<int>(2,0));
+        //return f(0,1,prices,dp);
+        for(int ind=n-1;ind>=0;--ind)
+        {
+            for(int canBuy=0;canBuy<=1;++canBuy)
+            {
+                int Buy=0,notBuy=0;
+                if(canBuy)
+                {
+                    int notTake=dp[ind+1][canBuy];
+                    int Take=-prices[ind]+dp[ind+1][1-canBuy];
+                    Buy=max(notTake,Take);
+                }
+                else
+                {
+                    int notTake=dp[ind+1][canBuy];
+                    int Take=prices[ind]+dp[ind+2][1-canBuy];
+                    notBuy=max(notTake,Take);
+                }
+                
+                dp[ind][canBuy]=max(Buy,notBuy);
+            }
+        }
+        return dp[0][1];
     }
 };
