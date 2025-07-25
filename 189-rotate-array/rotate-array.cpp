@@ -4,7 +4,7 @@ public:
     void reverse(vector<int>&nums,int l,int r)
     {
         int n=nums.size();
-        while(l<r && l<n && r>=0)
+        while(l<r)
             swap(nums[l++],nums[r--]);
     }
 
