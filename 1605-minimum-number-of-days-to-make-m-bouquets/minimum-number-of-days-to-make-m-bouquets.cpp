@@ -21,12 +21,13 @@ public:
     }
 
     int minDays(vector<int>& bloomDay, int m, int k) {
-        ll l=INT_MAX,r=0,ans=-1;
+        ll l=INT_MAX,r=0,mx,ans=-1;
         for(ll i:bloomDay)
         {
             l=min(l,i);
             r=max(r,i);
         }
+        mx=r;
         while(l<=r)
         {
             ll mid=l+(r-l)/2;
@@ -38,6 +39,6 @@ public:
             else
                 l=mid+1;
         }
-        return ans;
+        return l>mx?-1:l;
     }
 };
