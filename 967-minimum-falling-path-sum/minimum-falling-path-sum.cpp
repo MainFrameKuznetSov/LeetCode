@@ -2,31 +2,27 @@ class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int n=matrix.size();
-        vector<int>prev(n,0);
-        for(int i=0;i<n;++i)
-            prev[i]=matrix[0][i];
-        for(int i=1;i<n;++i)
+        // vector<int>matrix[i-1](n,0);//O(n)
+        // for(int i=0;i<n;++i)
+        //     matrix[i-1][i]=matrix[0][i];
+        for(int i=1;i<n;++i)//O(n^2)
         {
-            vector<int>curr(n,0);
+            // vector<int>matrix[i](n,INT_MAX);//O(n)
             for(int j=0;j<n;++j)
             {
-                int up=matrix[i][j],rd=matrix[i][j],ld=matrix[i][j];
-                up+=prev[j];
-                if(j>0)
-                    ld+=prev[j-1];
-                else
-                    ld=INT_MAX;
-                if(j<n-1)
-                    rd+=prev[j+1];
-                else
-                    rd=INT_MAX;
-                curr[j]=min(up,min(ld,rd));
+                int up=matrix[i-1][j]+matrix[i][j];
+                int ld=INT_MAX,rd=INT_MAX;
+                if(j-1>=0)
+                    ld=matrix[i-1][j-1]+matrix[i][j];
+                if(j+1<n)
+                    rd=matrix[i-1][j+1]+matrix[i][j];
+                matrix[i][j]=min(up,min(ld,rd));
             }
-            prev=curr;
+            //matrix[i-1]=matrix[i];
         }
         int ans=INT_MAX;
-        for(int i=0;i<n;++i)
-            ans=min(ans,prev[i]);
+        for(int i:matrix[n-1])
+            ans=min(ans,i);
         return ans;
     }
 };
