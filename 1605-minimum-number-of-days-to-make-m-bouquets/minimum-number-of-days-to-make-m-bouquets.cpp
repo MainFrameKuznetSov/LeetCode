@@ -3,10 +3,10 @@
 class Solution {
 public:
 
-    ll helper(vector<int>&bloomDay,ll mid,int k)
+    ll helper(ll mid,vector<int>&bloomDay,int k)
     {
         ll cnt=0,bqt=0;
-        for(int i:bloomDay)
+        for(ll i:bloomDay)
         {
             if(i<=mid)
                 ++cnt;
@@ -21,21 +21,27 @@ public:
     }
 
     int minDays(vector<int>& bloomDay, int m, int k) {
-        ll l=INT_MAX,r=0;
+        //sort(bloomDay.begin(),bloomDay.end());
+        int n=bloomDay.size();
+        ll right=INT_MAX,left=INT_MIN,ans=-1;
         for(ll i:bloomDay)
         {
-            l=min(l,i);
-            r=max(r,i);
+            left=min(left,i);
+            right=max(right,i);
         }
-        ll mx=r;
-        while(l<=r)
+        //left=bloomDay[0],right=bloomDay[n-1];
+        //cout<<left<<" "<<right<<"\n";
+        while(left<=right)
         {
-            ll mid=l+(r-l)/2;
-            if(helper(bloomDay,mid,k)>=m)
-                r=mid-1;
+            ll mid=left+(right-left)/2;
+            if(helper(mid,bloomDay,k)>=m)
+            {
+                ans=mid;
+                right=mid-1;
+            }
             else
-                l=mid+1;
+                left=mid+1;
         }
-        return l>mx?-1:l;
+        return (int)ans;
     }
 };
