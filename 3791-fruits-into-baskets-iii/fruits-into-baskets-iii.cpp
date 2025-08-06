@@ -1,8 +1,8 @@
 class Solution {
 public:
     int numOfUnplacedFruits(vector<int>& fruits, vector<int>& baskets) {
-        int n=baskets.size(),lim = 1;
-        while(lim <= n) 
+        int n=baskets.size(),lim=1;
+        while(lim<=n) 
             lim <<= 1;
 
         vector<int> vec(lim << 1);
