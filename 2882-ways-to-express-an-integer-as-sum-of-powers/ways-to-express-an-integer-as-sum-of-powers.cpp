@@ -34,7 +34,24 @@ public:
         //     cout<<i<<" ";
         // cout<<"\n";
         int sz=v.size();
-        vector<vector<int>>dp(sz,vector<int>(n+1,-1));
-        return f(sz-1,n,v,dp);
+        //vector<vector<int>>dp(sz,vector<int>(n+1,0));
+        //return f(sz-1,n,v,dp);
+        vector<int>pre(n+1,0);
+        pre[0]=1;
+        pre[v[0]]=1;
+        for(int i=1;i<sz;++i)
+        {
+            vector<int>curr(n+1,0);
+            curr[0]=1;
+            for(int j=1;j<=n;++j)
+            {
+                int notTake=pre[j],Take=0;
+                if(j>=v[i])
+                    Take=pre[j-v[i]];
+                curr[j]=(Take+notTake)%MOD;
+            }
+            pre=curr;
+        }
+        return pre[n];
     }
 };
