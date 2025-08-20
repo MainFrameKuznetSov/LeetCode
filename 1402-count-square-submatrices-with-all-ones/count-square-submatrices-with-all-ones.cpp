@@ -10,8 +10,6 @@ public:
             prev[i]=matrix[0][i];
             ans+=prev[i];
         }
-        // for(int i=0;i<n;++i)
-        //     dp[i][0]=matrix[i][0];
         for(int i=1;i<n;++i)
         {
             vector<int>curr(m,0);
