@@ -26,23 +26,26 @@ public:
         if(amount==0)
             return 0;
         int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        //vector<vector<int>>dp(n,vector<int>(amount+1,0));
         // int ans=f(n-1,amount,coins,dp);
         // return ans==1e9?-1:ans;
+        vector<int>pre(amount+1,0);
         for(int i=1;i<=amount;++i)
-            dp[0][i]=(i%coins[0]==0)?i/coins[0]:1e9;
+            pre[i]=(i%coins[0]==0)?i/coins[0]:1e9;
         for(int i=1;i<n;++i)
         {
+            vector<int>cur(amount+1,0);
             for(int j=1;j<=amount;++j)
             {
-                int notTake=dp[i-1][j],Take=INT_MAX;
+                int notTake=pre[j],Take=INT_MAX;
                 if(j>=coins[i])
-                    Take=1+dp[i][j-coins[i]];
-                dp[i][j]=min(notTake,Take);
+                    Take=1+cur[j-coins[i]];
+                cur[j]=min(notTake,Take);
             }
+            pre=cur;
         }
-        if(dp[n-1][amount]==1e9)
+        if(pre[amount]==1e9)
             return -1;
-        return dp[n-1][amount];
+        return pre[amount];
     }
 };
