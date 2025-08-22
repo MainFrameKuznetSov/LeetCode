@@ -7,12 +7,12 @@ public:
             pprod[i+1]=pprod[i]*nums[i];
         for(int i=n-1;i>=0;--i)
             sprod[i]=sprod[i+1]*nums[i];
-        for(int i:pprod)
-            cout<<i<<" ";
-        cout<<"\n";
-        for(int i:sprod)
-            cout<<i<<" ";
-        cout<<"\n";
+        // for(int i:pprod)
+        //     cout<<i<<" ";
+        // cout<<"\n";
+        // for(int i:sprod)
+        //     cout<<i<<" ";
+        // cout<<"\n";
         for(int i=0;i<n;++i)
             ans[i]=pprod[i]*sprod[i+1];
         return ans;
