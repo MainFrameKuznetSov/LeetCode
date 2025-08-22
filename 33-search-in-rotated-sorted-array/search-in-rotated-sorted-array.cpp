@@ -5,6 +5,7 @@ public:
         while(l<=r)
         {
             int mid=l+(r-l)/2;
+            //cout<<l<<" "<<mid<<" "<<r<<"\n";
             if(nums[mid]==target)
                 return mid;
             if(nums[l]<=nums[mid])
