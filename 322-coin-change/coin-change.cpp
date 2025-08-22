@@ -1,16 +1,33 @@
 class Solution {
 public:
-    int coinChange(vector<int>& coins,int amt) {
-        vector<int>dp(amt+1,amt+1);
-        dp[0]=0;
-        for(int i=0;i<=amt;++i)
+
+    int f(int ind,int W,vector<int>&v,vector<vector<int>>&dp)
+    {
+        if(W==0)
+            return 0;
+        if(ind==0)
         {
-            for(int j=0;j<coins.size();++j)
-            {
-                if(i-coins[j]>=0)
-                    dp[i]=min(dp[i],dp[i-coins[j]]+1);
-            }
+            if(W%v[ind]==0)
+                return W/v[ind];
+            return 1e9;
         }
-        return dp[amt]==amt+1?-1:dp[amt];
+
+        if(dp[ind][W]!=-1)
+            return dp[ind][W];
+
+        int notTake=f(ind-1,W,v,dp),Take=INT_MAX;
+        if(W>=v[ind])
+            Take=1+f(ind,W-v[ind],v,dp);
+        return dp[ind][W]=min(notTake,Take);
+
+    }
+
+    int coinChange(vector<int>& coins, int amount) {
+        if(amount==0)
+            return 0;
+        int n=coins.size();
+        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        int ans=f(n-1,amount,coins,dp);
+        return ans==1e9?-1:ans;
     }
 };
