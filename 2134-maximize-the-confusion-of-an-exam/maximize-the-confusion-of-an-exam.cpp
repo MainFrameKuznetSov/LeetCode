@@ -38,32 +38,50 @@ public:
 
     int maxConsecutiveAnswers(string answerKey, int k) {
         int size=answerKey.size(),maxLen=0,left=0,cntFalse=0,cntTrue=0;
+        // for(int right=0;right<size;++right)
+        // {
+        //     if(answerKey[right]=='F')
+        //         ++cntFalse;
+        //     while(cntFalse>k)
+        //     {
+        //         if(answerKey[left]=='F')
+        //             --cntFalse;
+        //         ++left;
+        //     }
+        //     maxLen=max(maxLen,right-left+1);
+        // }
+        // left=0;
+        // for(int right=0;right<size;++right)
+        // {
+        //     if(answerKey[right]=='T')
+        //         ++cntTrue;
+        //     while(cntTrue>k)
+        //     {
+        //         if(answerKey[left]=='T')
+        //             --cntTrue;
+        //         ++left;
+        //     }
+        //     maxLen=max(maxLen,right-left+1);
+        // }
+
+        // return maxLen;
+
         for(int right=0;right<size;++right)
         {
-            if(answerKey[right]=='F')
+            if(answerKey[right]=='T')
+                ++cntTrue;
+            else
                 ++cntFalse;
-            while(cntFalse>k)
+            while(min(cntTrue,cntFalse)>k)
             {
-                if(answerKey[left]=='F')
+                if(answerKey[left]=='T')
+                    --cntTrue;
+                else
                     --cntFalse;
                 ++left;
             }
             maxLen=max(maxLen,right-left+1);
         }
-        left=0;
-        for(int right=0;right<size;++right)
-        {
-            if(answerKey[right]=='T')
-                ++cntTrue;
-            while(cntTrue>k)
-            {
-                if(answerKey[left]=='T')
-                    --cntTrue;
-                ++left;
-            }
-            maxLen=max(maxLen,right-left+1);
-        }
-
         return maxLen;
     }
 };
