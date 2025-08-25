@@ -1,22 +1,48 @@
 class Solution {
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
-        int n=mat.size(),m=mat[0].size();
-        map<int,vector<int>>mp;
+        int n=mat.size(),m=mat[0].size(),i=0,j=0;
         vector<int>ans;
-        for(int i=0;i<n;++i)//fill using i+j
+        bool up=1;
+        while(ans.size()<n*m)
         {
-            for(int j=0;j<m;++j)
-                mp[i+j].push_back(mat[i][j]);
-        }
-        bool flip=1;
-        for(auto &it:mp)
-        {
-            if(flip)
-                reverse(it.second.begin(),it.second.end());
-            for(int i:it.second)
-                ans.push_back(i);
-            flip=1-flip;
+            ans.push_back(mat[i][j]);
+            if(up)
+            {
+                if(j==m-1)//Top-right hit
+                {
+                    up=false;
+                    ++i;
+                }
+                else if(i==0)//Boundary
+                {
+                    up=false;
+                    ++j;
+                }
+                else//Normal
+                {
+                    --i;
+                    ++j;
+                }
+            }
+            else
+            {
+                if(i==n-1)//Bottom left
+                {
+                    up=true;
+                    ++j;
+                }
+                else if(j==0)//Boundary
+                {
+                    up=true;
+                    ++i;
+                }
+                else//Normal
+                {
+                    ++i;
+                    --j;
+                }
+            }
         }
         return ans;
     }
