@@ -1,7 +1,7 @@
 class Solution {
 public:
 
-    double getLength(int l,int b)
+    double getDiagLength(int l,int b)
     {
         return sqrt(l*l+b*b);
     }
@@ -12,14 +12,15 @@ public:
         for(auto it:dimensions)
         {
             int l=it[0],b=it[1];
-            if(maxDiagonal<getLength(l,b))
+            double len=getDiagLength(l,b);
+            if(maxDiagonal<len)
             {
-                maxDiagonal=getLength(l,b);
+                maxDiagonal=len;
                 maxArea=l*b;
             }
-            else if(maxDiagonal==getLength(l,b))
+            else if(maxDiagonal==len)
             {
-                maxDiagonal=getLength(l,b);
+                maxDiagonal=len;
                 maxArea=max(maxArea,l*b);
             }
             // cout<<maxDiagonal<<" "<<maxArea<<"\n";
