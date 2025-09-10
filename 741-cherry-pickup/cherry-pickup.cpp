@@ -16,7 +16,7 @@ public:
         if(i1!=i2 || j1!=j2)
             totalPickup+=grid[i2][j2];
 
-        int bestChoice=max(
+        totalPickup+=max(
                             max(f(i1+1,j1,i2+1,n,grid,dp),
                             f(i1+1,j1,i2,n,grid,dp)),
                             max(f(i1,j1+1,i2+1,n,grid,dp),
@@ -26,7 +26,7 @@ public:
         // if(bestChoice==INT_MIN)
         //     return dp[i1][j1][i2]=INT_MIN;
 
-        return dp[i1][j1][i2]=totalPickup+bestChoice;
+        return dp[i1][j1][i2]=totalPickup;
     }
 
     int cherryPickup(vector<vector<int>>& grid) {
