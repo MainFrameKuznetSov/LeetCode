@@ -23,8 +23,8 @@ public:
                             f(i1,j1+1,i2,n,grid,dp))
                         );
                     
-        if(bestChoice==INT_MIN)
-            return dp[i1][j1][i2]=INT_MIN;
+        // if(bestChoice==INT_MIN)
+        //     return dp[i1][j1][i2]=INT_MIN;
 
         return dp[i1][j1][i2]=totalPickup+bestChoice;
     }
