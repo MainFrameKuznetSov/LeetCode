@@ -7,9 +7,7 @@ public:
         {
             while(!ans.empty())
             {
-                int pre=ans.back();
-                int curr=it;
-                int GCD=__gcd(pre,curr);
+                int pre=ans.back(),curr=it,GCD=__gcd(pre,curr);
                 if(GCD==1)
                     break;
                 ans.pop_back();
