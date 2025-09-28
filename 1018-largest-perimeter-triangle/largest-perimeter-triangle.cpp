@@ -12,9 +12,9 @@ public:
         for(int i=n-1;i>=2;--i)
         {
             int a=nums[i],b=nums[i-1],c=nums[i-2];
-            if(isTriangle(a,b,c))
-                maxPeri=max(maxPeri,a+b+c);
+            if(a<b+c)
+                return a+b+c;
         }
-        return maxPeri;
+        return 0;
     }
 };
