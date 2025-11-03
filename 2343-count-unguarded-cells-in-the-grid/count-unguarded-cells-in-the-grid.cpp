@@ -43,7 +43,7 @@ public:
         for(auto g:guards)
             mark(g[0],g[1],grid,m,n);
         
-        int res = 0;
+        int res=0;
         for(auto r:grid) 
         {
             for(int cell:r) 
