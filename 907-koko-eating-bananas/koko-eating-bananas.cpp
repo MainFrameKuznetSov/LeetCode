@@ -5,24 +5,25 @@ public:
 
     ll helper(ll mid,vector<int>&piles)
     {
-        ll ans=0;
+        ll sum=0;
         for(ll i:piles)
-            ans+=(i+mid-1)/mid;
-        return ans;
+            sum+=(i+mid-1)/mid;
+        return sum;
     }
 
     int minEatingSpeed(vector<int>& piles, int h) {
-        sort(piles.begin(),piles.end());
-        int n=piles.size();
-        ll left=1,right=piles[n-1];
-        while(left<=right)
+        ll r=0;
+        for(ll i:piles)
+            r+=i;
+        ll l=1;
+        while(l<=r)
         {
-            ll mid=left+(right-left)/2;
+            ll mid=l+(r-l)/2;
             if(helper(mid,piles)<=h)
-                right=mid-1;
+                r=mid-1;
             else
-                left=mid+1;
+                l=mid+1;
         }
-        return left;
+        return l;
     }
 };
