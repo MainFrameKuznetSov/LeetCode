@@ -1,38 +1,41 @@
+#define INF (int)1e9
+#define MOD (int)(1e9+7)
+#define ll long long
+
 class Solution {
 public:
     int countPaths(int n, vector<vector<int>>& roads) {
-        int MOD=1e9+7;
-        vector<pair<int,int>>adj[n];
+        vector<vector<pair<int,int>>>adj(n);
         for(auto it:roads)
         {
             adj[it[0]].push_back({it[1],it[2]});
             adj[it[1]].push_back({it[0],it[2]});
         }
-        vector<long long>dist(n,LLONG_MAX);
+        vector<ll>dist(n,(ll)(5e16));
         vector<int>ways(n,0);
         dist[0]=0;
         ways[0]=1;
-        set<pair<long long,int>>st;
-        st.insert({0,0});
-        while(!st.empty())
+        set<pair<ll,int>>pq;
+        pq.insert({0,0});
+        while(!pq.empty())
         {
-            auto top=*st.begin();
-            st.erase(top);
-            long long dis=top.first;
+            auto top=*pq.begin();
+            pq.erase(top);
+            ll dis=top.first;
             int node=top.second;
             for(auto it:adj[node])
             {
-                int nextNode=it.first,wt=it.second;
-                if(dis+wt<dist[nextNode])
+                int nxt=it.first,wt=it.second;
+                if(dis+wt<dist[nxt])
                 {
-                    dist[nextNode]=dis+wt;
-                    ways[nextNode]=ways[node]%MOD;
-                    st.insert({dist[nextNode],nextNode});
+                    dist[nxt]=dis+wt;
+                    ways[nxt]=ways[node];
+                    pq.insert({dis+wt,nxt});
                 }
-                else if(dis+wt==dist[nextNode])
-                    ways[nextNode]=(ways[nextNode]+ways[node])%MOD;
+                else if(dis+wt==dist[nxt])
+                    ways[nxt]=(ways[nxt]+ways[node])%MOD;
             }
         }
-        return ways[n-1]%MOD;
+        return ways[n-1];
     }
 };
