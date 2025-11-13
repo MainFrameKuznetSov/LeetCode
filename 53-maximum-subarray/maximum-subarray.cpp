@@ -6,8 +6,7 @@ public:
         {
             sum+=i;
             ans=max(ans,sum);
-            if(sum<0)
-                sum=0;
+            sum=max(0,sum);
         }
         return ans;
     }
