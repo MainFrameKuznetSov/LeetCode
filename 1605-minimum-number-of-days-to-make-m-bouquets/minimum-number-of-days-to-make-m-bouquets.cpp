@@ -1,47 +1,38 @@
 #define ll long long
-
 class Solution {
 public:
 
     ll helper(ll mid,vector<int>&bloomDay,int k)
     {
-        ll cnt=0,bqt=0;
+        int ans=0,cnt=0;
         for(ll i:bloomDay)
         {
-            if(i<=mid)
+            if(mid>=i)
                 ++cnt;
             else
             {
-                bqt+=(cnt/k);
+                ans+=(cnt/k);
                 cnt=0;
             }
         }
-        bqt+=(cnt/k);
-        return bqt;
+        return ans+(cnt/k);
     }
 
     int minDays(vector<int>& bloomDay, int m, int k) {
-        //sort(bloomDay.begin(),bloomDay.end());
-        int n=bloomDay.size();
-        ll right=INT_MAX,left=INT_MIN,ans=-1;
+        ll n=bloomDay.size();
+        if(n<(k*1LL*m))
+            return -1;
+        ll left=1,right=0;
         for(ll i:bloomDay)
-        {
-            left=min(left,i);
-            right=max(right,i);
-        }
-        //left=bloomDay[0],right=bloomDay[n-1];
-        //cout<<left<<" "<<right<<"\n";
+            right=max(i,right);
         while(left<=right)
         {
             ll mid=left+(right-left)/2;
             if(helper(mid,bloomDay,k)>=m)
-            {
-                ans=mid;
                 right=mid-1;
-            }
             else
                 left=mid+1;
         }
-        return (int)ans;
+        return left;
     }
 };
