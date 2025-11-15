@@ -25,7 +25,8 @@ public:
         for(i=1;i<=n;++i) 
         {
             for (int j=0;j<200 && j<=v[i];++j)
-                ans+=max(0,min(i-j*(j+1)+(j!= 0),mp[v[i]-j+1])-mp[v[i]-j]);
+                ans+=max(0,min(i-j*(j+1)+
+                    (j!= 0),mp[v[i]-j+1])-mp[v[i]-j]);
         }
         return ans;
     }
