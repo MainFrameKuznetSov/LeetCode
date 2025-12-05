@@ -4,14 +4,6 @@ public:
         int n=nums.size(),sum=0;
         for(int i:nums)
             sum+=i;
-        int curr=0,ans=0;
-        for(int i=0;i<n-1;++i)
-        {
-            curr+=nums[i];
-            // cout<<curr<<" "<<(sum-curr)<<"\n";
-            if((sum-curr-curr)%2==0)
-                ++ans;
-        }
-        return ans;
+        return sum&1?0:n-1;
     }
 };
