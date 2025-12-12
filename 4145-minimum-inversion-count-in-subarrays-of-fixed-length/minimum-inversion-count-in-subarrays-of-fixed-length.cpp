@@ -1,10 +1,7 @@
 #define ll long long
 
-class Solution {
-public:
-
-    class Tree
-    {
+class Tree
+{
     public:
         int n;
         vector<int>frq;
@@ -30,8 +27,10 @@ public:
             return end;
         }
         
-    };
-    
+};
+
+class Solution {
+public:    
     long long minInversionCount(vector<int>& nums, int k) {
         int n=nums.size();
         if(k==1)
