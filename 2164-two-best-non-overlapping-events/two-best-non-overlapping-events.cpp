@@ -1,34 +1,31 @@
 class Solution {
 public:
-    int maxTwoEvents(vector<vector<int>>& events) {
-        int n=events.size(),ans=0;
-        sort(events.begin(),events.end(),[&](vector<int>a,vector<int>b)
-        {
-            return b[0]>a[0];
-        });
-        vector<int>suff(n);
-        suff[n-1]=events[n-1][2];
-        for(int i=n-2;i>=0;--i)
-            suff[i]=max(events[i][2],suff[i+1]);
+    vector<vector<int>>events,dp;
+    vector<int>temp;
+
+    int dfs(int i,int k) 
+    {
+        if(i==events.size() || k==2) 
+            return 0;
+        if(dp[i][k]!=-1) 
+            return dp[i][k];
         
-        for(int i=0;i<n;++i)
-        {
-            int l=i+1,r=n-1,nxt=-1;
-            while(l<=r)
-            {
-                int mid=l+(r-l)/2;
-                if(events[mid][0]>events[i][1])
-                {
-                    nxt=mid;
-                    r=mid-1;
-                }
-                else
-                    l=mid+1;
-            }
-            if(nxt!=-1)
-                ans=max(ans,events[i][2]+suff[nxt]);
-            ans=max(ans,events[i][2]);
-        }
-        return ans;
+        int ans=dfs(i+1,k);
+
+        int nxt=lower_bound(temp.begin(),temp.end(),events[i][1]+1)-temp.begin();
+        ans=max(ans,events[i][2]+dfs(nxt,k+1));
+
+        return dp[i][k]=ans;
+    }
+
+    int maxTwoEvents(vector<vector<int>>& events) {
+        sort(events.begin(),events.end());
+        this->events=events;
+        int n=events.size();
+        temp.resize(n);
+        for(int i=0;i<n;++i) 
+            temp[i]=events[i][0];
+        dp.assign(n,vector<int>(3,-1));
+        return dfs(0,0);
     }
 };
