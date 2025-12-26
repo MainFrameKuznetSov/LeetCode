@@ -4,12 +4,10 @@ public:
         int n=customers.size(),penalty=0,mn=0,ans=0;
         for(int i=0;i<n;++i)
         {
-            int temp;
             if(customers[i]=='Y')
-                temp=1;
+                --penalty;
             else
-                temp=-1;
-            penalty-=temp;
+                ++penalty;
             if(mn>penalty)
             {
                 mn=penalty;
