@@ -1,9 +1,11 @@
+#define ll long long
+
 class Solution {
 public:
     int mostBooked(int n, vector<vector<int>>& meetings) {
         int m=meetings.size();
         vector<int>vec(n,0);
-        vector<long long>time(n,0);
+        vector<ll>time(n,0);
         sort(meetings.begin(),meetings.end());
 
         for(int i=0;i<m;++i)
@@ -11,7 +13,7 @@ public:
             int l=meetings[i][0],r=meetings[i][1];
             bool f=0;
             int mn=-1;
-            long long val=1e18;
+            ll val=1e18;
             for(int j=0;j<n;++j)
             {
                 if(time[j]<val)
