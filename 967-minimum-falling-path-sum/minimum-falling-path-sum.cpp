@@ -1,28 +1,29 @@
+#define INF (int)1e9
+
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int m=matrix.size(),n=matrix[0].size();
-        vector<int>pre(n,0);
-        for(int i=0;i<n;++i)
-            pre[i]=matrix[0][i];
+    int minFallingPathSum(vector<vector<int>>&grid) {
+        int n=grid.size(),m=grid[0].size();
+        vector<int>pre(m,0);
+        for(int i=0;i<m;++i)
+            pre[i]=grid[0][i];
         for(int i=1;i<n;++i)
         {
-            vector<int>cur(n,0);
-            for(int j=0;j<n;++j)
+            vector<int>cur(m,0);
+            for(int j=0;j<m;++j)
             {
-                cur[j]=pre[j];
-                if(j-1>=0)
-                    cur[j]=min(cur[j],pre[j-1]);
-                if(j+1<n)
-                    cur[j]=min(cur[j],pre[j+1]);
-                cur[j]+=matrix[i][j];
+                int top=pre[j],ld=INF,rd=INF;
+                if(j>=1)
+                    ld=pre[j-1];
+                if(j+1<m)
+                    rd=pre[j+1];
+                cur[j]=min({top,ld,rd})+grid[i][j];
             }
-            pre=cur;
-            cur.clear();
+            swap(pre,cur);
         }
-        int ans=INT_MAX;
-        for(int i=0;i<n;++i)
-            ans=min(ans,pre[i]);
+        int ans=INF;
+        for(int i:pre)
+            ans=min(ans,i);
         return ans;
     }
 };
