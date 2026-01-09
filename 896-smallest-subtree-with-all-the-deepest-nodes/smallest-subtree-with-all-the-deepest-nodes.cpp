@@ -46,7 +46,8 @@ public:
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
         nodeMap[root->val]=0;
         maxD=0;
-        mapFiller(root,0);
-        return findLCA(root);
+        mapFiller(root,0);//O(n)
+        return findLCA(root);//O(n)
+        //Two-pass solution
     }
 };
