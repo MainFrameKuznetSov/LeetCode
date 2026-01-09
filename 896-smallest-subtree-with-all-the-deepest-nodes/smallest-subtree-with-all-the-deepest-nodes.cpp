@@ -12,42 +12,22 @@
 class Solution {
 public:
 
-    int maxD;
-    unordered_map<int,int>nodeMap;
-
-    void mapFiller(TreeNode* root,int depth)
+    pair<int,TreeNode*> findSubtree(TreeNode* root)
     {
         if(!root)
-            return ;
-        nodeMap[root->val]=depth;
-        maxD=max(maxD,depth);
-        mapFiller(root->left,depth+1);
-        mapFiller(root->right,depth+1);
-    }
-
-    TreeNode* findLCA(TreeNode* root)
-    {
-        if(!root)
-            return NULL;
-        if(nodeMap[root->val]==maxD)
-            return root;
+            return {0,NULL};
         
-        TreeNode* leftNode=findLCA(root->left);
-        TreeNode* rightNode=findLCA(root->right);
-
-        if(leftNode && rightNode)
-            return root;
-        if(!leftNode)
-            return rightNode;
-        return leftNode;
+        auto leftNode=findSubtree(root->left),rightNode=findSubtree(root->right);
+        if(leftNode.first==rightNode.first)
+            return {leftNode.first+1,root};
+        else if(leftNode.first>rightNode.first)
+            return {leftNode.first+1,leftNode.second};
+        else
+            return {rightNode.first+1,rightNode.second};
 
     }
 
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        nodeMap[root->val]=0;
-        maxD=0;
-        mapFiller(root,0);//O(n)
-        return findLCA(root);//O(n)
-        //Two-pass solution
+        return findSubtree(root).second;
     }
 };
