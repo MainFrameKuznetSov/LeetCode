@@ -2,7 +2,7 @@ class Solution {
 public:
     bool isTrionic(vector<int>& nums) {
         int n=nums.size(),i=0;
-        while(i+1<n && nums[i]<nums[i + 1]) 
+        while(i+1<n && nums[i]<nums[i+1]) 
             ++i;
         if(i==0 || i==n-1) 
             return 0;
