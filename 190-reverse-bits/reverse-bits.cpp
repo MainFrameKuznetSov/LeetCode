@@ -1,29 +1,22 @@
 class Solution {
 public:
 
-    string rev(int n)
+    int getNum(vector<int>&bits)
     {
-        string ans="";
-        while(n)
-        {
-            ans=to_string(n%2)+ans;
-            n>>=1;
-        }
-        return ans;
+        long long ans=0;
+        for(int i=0;i<=31;++i)
+            ans+=(bits[i]<<i);
+        return (int)ans;
     }
 
     int reverseBits(int n) {
-        string revd=rev(n);
-        reverse(revd.begin(),revd.end());
-        revd+=string(32-(int)revd.size(),'0');
-        // cout<<revd<<"\n";
-        int pwr=0;
-        long long ans=0;
-        for(int i=revd.size()-1;i>=0;--i)
+        vector<int>bits(32,0);
+        int ind=31;
+        while(n)
         {
-            ans+=(long long)((revd[i]-'0')<<pwr);
-            ++pwr;
+            bits[ind--]=n%2;
+            n>>=1;
         }
-        return (int)ans;
+        return getNum(bits);
     }
 };
