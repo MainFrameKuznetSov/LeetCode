@@ -1,30 +1,19 @@
-#define OFF 10000
-
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        vector<int>freq(1e5+1,0),ans;
-        int mn=INT_MAX,mx=INT_MIN;
+        unordered_map<int,int>mp;
+        vector<int>ans;
         for(int i:nums)
+            ++mp[i];
+        priority_queue<pair<int,int>>pq;
+        int limit=mp.size()-k;
+        for(auto it:mp)
+            pq.push({it.second,it.first});
+        while(ans.size()<k && !pq.empty())
         {
-            mn=min(mn,i);
-            mx=max(mx,i);
-            ++freq[i+OFF];
+            ans.push_back(pq.top().second);
+            pq.pop();
         }
-        vector<pair<int,int>>pr;
-        for(int i=mn;i<=mx;++i)
-        {
-            if(freq[i+OFF]>0)
-                pr.push_back({i,freq[i+OFF]});
-        }
-        sort(pr.begin(),pr.end(),[&](pair<int,int>a,pair<int,int>b)
-        {
-            if(a.second>b.second)
-                return true;
-            return false;
-        });
-        for(int i=0;i<k;++i)
-            ans.push_back(pr[i].first);
         return ans;
     }
 };
