@@ -7,12 +7,16 @@ class Solution {
             (a,b)->{
                 return freqMap.get(b)-freqMap.get(a);
         });
-        for(int i:freqMap.keySet())
-            pq.add(i);
-        int ind=0;
+        int limit=freqMap.size()-k,ind=0;
         int ans[]=new int[k];
-        while(ind<k && !pq.isEmpty())
-            ans[ind++]=pq.poll();
+        for(int i:freqMap.keySet())
+        {
+            pq.add(i);
+            if(pq.size()>limit)
+                ans[ind++]=pq.poll();
+        }
+        // while(ind<k && !pq.isEmpty())
+        //     ans[ind++]=pq.poll();
         return ans;
     }
 }
