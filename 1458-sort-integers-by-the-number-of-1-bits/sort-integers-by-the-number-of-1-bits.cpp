@@ -4,15 +4,13 @@ public:
         vector<pair<int,int>>pr;
         for(int i:arr)
             pr.push_back({i,__builtin_popcount(i)});
-        sort(pr.begin(),pr.end(),[&](auto a,auto b)
+        sort(arr.begin(),arr.end(),[&](int a,int b)
         {
-            if(a.second!=b.second)
-                return a.second<b.second;
-            return a.first<b.first;
+            int bitA=__builtin_popcount(a),bitB=__builtin_popcount(b);
+            if(bitA!=bitB)
+                return bitA<bitB;
+            return a<b;
         });
-        vector<int>ans;
-        for(auto i:pr)
-            ans.push_back(i.first);
-        return ans;
+        return arr;
     }
 };
